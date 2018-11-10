@@ -10,15 +10,13 @@ public class Category {
     private String name;
 
 
-    public Category(String id, String name) {
+   /* public Category(String id, String name) {
         this.id = id;
         this.name = name;
 
     }
+*/
 
-    public Category() {
-
-    }
 
     public String getId() {
         return id;

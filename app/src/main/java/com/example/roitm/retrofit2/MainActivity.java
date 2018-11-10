@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.single_row_view);
         add=findViewById(R.id.buttonNew);
         delete=findViewById(R.id.btnDelete);
         update=findViewById(R.id.btnUpdate);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 name.setText("");
             }
         });
-        adapter.setOnItemClickListener(new ItemClickListener() {
+        /*adapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void OnItemClick(int position, Category category) {
                 builder = new AlertDialog.Builder(MainActivity.this);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog = builder.create();
                 dialog.show();
             }
-        });
+        });*/
     }
     private void InitUpdateDialog(final int position, View view) {
 
@@ -128,27 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        /*call.enqueue(new Callback<CategoryList>() {
-            @Override
-            public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<CategoryList> call, Throwable t) {
-
-            }
-
-            @Override
-            public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
-                generateCategoryList(response.body().getCategoryArrayList());
-            }
-
-            @Override
-            public void onFailure(Call<CategoryList> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
 
     /** Method to generate List of notice using RecyclerView with custom adapter*/
