@@ -36,8 +36,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder categoryViewHolder, final int i) {
         final Category categoryAdapter = dataList.get(i);
-        categoryViewHolder.idCategory.setText(dataList.get(i).getId());
-        categoryViewHolder.nameCategory.setText(dataList.get(i).getName());
+        categoryViewHolder.tvIdCategory.setText(dataList.get(i).getId());
+        categoryViewHolder.tvNameCategory.setText(dataList.get(i).getName());
 
         categoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +46,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             }
         });
 
-        categoryViewHolder.nameCategory.setOnClickListener(new View.OnClickListener() {
+        categoryViewHolder.tvNameCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataList.remove(i);
@@ -61,24 +61,27 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return dataList.size();
     }
 
+    public void setOnItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+
 
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
 
-        TextView idCategory;
-        EditText nameCategory;
+        TextView tvIdCategory,tvNameCategory;
+
 
         CategoryViewHolder(View itemView) {
             super(itemView);
-            idCategory = itemView.findViewById(R.id.id_category);
-            nameCategory = itemView.findViewById(R.id.name_category);
+            tvIdCategory = itemView.findViewById(R.id.tv_id_category);
+            tvNameCategory = itemView.findViewById(R.id.tv_name_category);
 
         }
     }
-        public void setOnItemClickListener(ItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
 
-    }
+
         public void UpdateData(int position, Category categoryAdapter){
 
             dataList.remove(position);

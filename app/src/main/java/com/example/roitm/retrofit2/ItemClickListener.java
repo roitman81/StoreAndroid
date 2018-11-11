@@ -5,5 +5,5 @@ import com.example.roitm.retrofit2.model.Category;
 
 public interface ItemClickListener {
 
-    void OnItemClick(int position,Category category);
+    void OnItemClick(int i,Category category);
 }

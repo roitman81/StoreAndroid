@@ -33,78 +33,33 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity {
-    EditText name,update_name_category;
-
-    private CategoryAdapter adapter;
-    private RecyclerView recyclerView;
+public class MainActivity extends AppCompatActivity
+{
+    EditText name;
+    EditText update_name_category;
+    EditText idCategory;
+     CategoryAdapter adapter;
+     RecyclerView recyclerView;
     Button add,delete,update,btnUpdate,btnDelete,btnCancel;
     List<Category> list=new ArrayList<>();
-    String name_Category;
+    String name_Category,id_Category;
     AlertDialog.Builder builder;
 
     AlertDialog dialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_row_view);
-        add=findViewById(R.id.buttonNew);
+        setContentView(R.layout.activity_main);
+
         delete=findViewById(R.id.btnDelete);
         update=findViewById(R.id.btnUpdate);
          name =  findViewById(R.id.name_category);
+        idCategory=findViewById(R.id.id_category);
 
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name_Category = name.getText().toString();
-                Category category = new Category();
-                category.setName(name_Category);
-                list.add(category);
-                adapter.notifyDataSetChanged();
-                Toast.makeText(MainActivity.this,"User Add Success...",Toast.LENGTH_SHORT).show();
-                name.setText("");
-            }
-        });
-        /*adapter.setOnItemClickListener(new ItemClickListener() {
-            @Override
-            public void OnItemClick(int position, Category category) {
-                builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Update User Info");
-                builder.setCancelable(false);
-                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.update_row_view,null,false);
-                InitUpdateDialog(position,view);
-                builder.setView(view);
-                dialog = builder.create();
-                dialog.show();
-            }
-        });*/
-    }
-    private void InitUpdateDialog(final int position, View view) {
-
-        update_name_category = view.findViewById(R.id.update_name_category);
-        btnUpdate= view.findViewById(R.id.btn_update_user);
-        btnCancel = view.findViewById(R.id.btn_update_cancel);
-        update_name_category.setText(name_Category);
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name_Category = update_name_category.getText().toString();
-                Category category = new Category();
-                category.setName(name_Category);
-                adapter.UpdateData(position,category);
-                Toast.makeText(MainActivity.this,"User Updated..",Toast.LENGTH_SHORT).show();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View view) {
-           dialog.dismiss();
-        }
-        });
-
-                /** Create handle for the RetrofitInstance interface*/
+        /** Create handle for the RetrofitInstance interface*/
         GetCategoryDataService service = RetrofitInstance.getRetrofitInstance().create(GetCategoryDataService.class);
 
         /** Call the method with parameter in the interface to get the notice data*/
@@ -116,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Category>>() {
 
             @Override
-                public void onResponse(Call<ArrayList<Category>> call, Response<ArrayList<Category>> response) {
-                    generateCategoryList(response.body());
+            public void onResponse(Call<ArrayList<Category>> call, Response<ArrayList<Category>> response) {
+                generateCategoryList(response.body());
             }
 
             @Override
@@ -129,18 +84,89 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
+
     }
 
     /** Method to generate List of notice using RecyclerView with custom adapter*/
     private void generateCategoryList(ArrayList<Category> categoryArrayList) {
 
-            recyclerView = findViewById(R.id.recycler_view_notice_list);
-            adapter = new CategoryAdapter(categoryArrayList);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(adapter);
-    }
+        recyclerView = findViewById(R.id.recycler_view_notice_list);
+        adapter = new CategoryAdapter(categoryArrayList);
+
+
+        add=findViewById(R.id.buttonNew);
+        add.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                name_Category = name.getText().toString();
+                //  id_Category=idCategory.getText().toString();
+                Category category = new Category();
+                // category.setId((id_Category));
+                category.setName(name_Category);
+
+                list.add(category);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this,"User Add Success...",Toast.LENGTH_SHORT).show();
+                name.setText("");
+                idCategory.setText("");
+
+            }
+        });
+
+        adapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void OnItemClick(int position, Category category) {
+                builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Update User Info");
+                builder.setCancelable(false);
+                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.update_row_view,null,false);
+                InitUpdateDialog(position,view);
+                builder.setView(view);
+                dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+
+
+
+
 
 }
+
+
+
+
+
+
+    private void InitUpdateDialog(final int position, View view) {
+
+        update_name_category = view.findViewById(R.id.update_name_category);
+        btnUpdate = view.findViewById(R.id.btn_update_user);
+        btnCancel = view.findViewById(R.id.btn_update_cancel);
+        update_name_category.setText(name_Category);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                name_Category = update_name_category.getText().toString();
+                Category category = new Category();
+                category.setName(name_Category);
+                adapter.UpdateData(position, category);
+                Toast.makeText(MainActivity.this, "User Updated..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+    }}
+
+
 
 

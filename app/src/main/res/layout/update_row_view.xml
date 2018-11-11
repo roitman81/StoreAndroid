@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <!-- Text Notice Name -->
-        <TextView
+        <EditText
             android:id="@+id/update_id_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
