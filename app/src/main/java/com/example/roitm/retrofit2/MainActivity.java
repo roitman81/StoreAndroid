@@ -163,51 +163,7 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
-    public void sendPost(String id, String name) {
-        Category.savePost(id, name, 1).enqueue(new Callback<Category>() {
-            @Override
-            public void onResponse(List<Category> call, Response<Category> response) {
 
-                if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i(TAG, "post submitted to API." + response.body().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Category> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
-            }
-        });
-    }
-
-    public void showResponse(String response) {
-        if(update_name_category.getVisibility() == View.GONE) {
-            update_name_category.setVisibility(View.VISIBLE);
-        }
-        update_name_category.setText(response);
-    }
-    public void sendPost(String title, String body) {
-
-        // RxJava
-        Category.savePost(title, body, 1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Category>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Category category) {
-                        showResponse(category.toString());
-                    }
-                });
-    }
 }
 
 
