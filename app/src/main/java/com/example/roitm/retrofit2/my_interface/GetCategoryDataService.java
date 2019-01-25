@@ -10,13 +10,23 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface GetCategoryDataService {
-    @GET("MyPortfolio2/rest/category")
+    @GET("/categories")
     Call<ArrayList<Category>> getCategoryData();
 
-    @PUT("MyPortfolio2/rest/category")
-    Call<Category> UpdateData(@Body Category category);
+    @POST("add/")
+    Call<Category> addCategory(@Body Category c);
+
+    @PUT("update")
+    Call<Category> updateCategory( @Body Category category);
+
+    @DELETE("categories/delete/{id}")
+    Call<Category> deleteCategory(@Path("id") int id);
+
 }

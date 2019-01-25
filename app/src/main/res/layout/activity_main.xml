@@ -42,11 +42,11 @@
             android:text="Category" />
 
         <Button
-            android:id="@+id/btn2"
+            android:id="@+id/buttonSupplier"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Something" />
+            android:text="Supplier" />
 
         <Button
             android:id="@+id/btn3"

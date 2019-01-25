@@ -37,7 +37,7 @@ import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button btnCategory;
+    Button btnCategory,buttonSupplier;
 
 
     @Override
@@ -45,20 +45,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnCategory=findViewById(R.id.buttonCat);
+        buttonSupplier=findViewById(R.id.buttonSupplier);
         btnCategory.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+            Intent intent=new Intent("android.intent.action.CategoryActivity");
+                        startActivity(intent);
+
+                    }
+                }
+        );
 
 
-
-                        Intent intent=new Intent("android.intent.action.CategoryActivity");
+        buttonSupplier.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent("android.intent.action.SupplierActivity");
                         startActivity(intent);
 
                     }
                 }
         );
     }
+
 }
 
 

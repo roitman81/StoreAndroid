@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CategoryActivity">
+    tools:context=".SupplierActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
 
         <!-- Text Notice Name -->
         <EditText
-            android:id="@+id/id_category"
+            android:id="@+id/idSupplier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
@@ -22,7 +22,7 @@
 
         <!-- Text Notice Description -->
         <EditText
-            android:id="@+id/name_category"
+            android:id="@+id/nameSupp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp" />
@@ -40,6 +40,12 @@
                 android:layout_weight="1"
                 android:text="New" />
 
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete" />
 
             <Button
                 android:id="@+id/btnUpdate"
@@ -53,9 +59,9 @@
         <!-- Text Notice FilePath -->
     </LinearLayout>
 
-<android.support.v7.widget.RecyclerView
-android:id="@+id/recycler_view_notice_list"
-android:layout_width="match_parent"
-android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_notice_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+</LinearLayout>

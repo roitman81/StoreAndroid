@@ -1,21 +1,28 @@
 package com.example.roitm.retrofit2.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Category {
 
-    @SerializedName("category_ID")
+    @SerializedName("id")
+    @Expose
     private String id;
-    @SerializedName("name_category")
+    @Expose
+    @SerializedName("name")
     private String name;
+    
 
 
-   /* public Category(String id, String name) {
+    public Category(String id, String name) {
         this.id = id;
         this.name = name;
 
     }
-*/
+
+    public Category() {
+
+    }
 
 
     public String getId() {

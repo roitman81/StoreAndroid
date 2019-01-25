@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Furniture store</string>
+    <string name="title_activity_supplier">SupplierActivity</string>
 </resources>

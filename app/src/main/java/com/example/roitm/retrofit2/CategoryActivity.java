@@ -27,23 +27,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-
-
-
 public class CategoryActivity extends AppCompatActivity {
 
         EditText name;
-        EditText update_name_category, update_id_category;
+
         EditText idCategory;
         CategoryAdapter adapter;
         RecyclerView recyclerView;
-        Button add, delete, update, btnUpdate, btnDelete, btnCancel;
-        List<Category> list = new ArrayList<>();
+        Button add, delete, update;
+        List<Category> list = new ArrayList<Category>();
         String name_Category, id_Category;
-        AlertDialog.Builder builder;
 
-        AlertDialog dialog;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +49,10 @@ public class CategoryActivity extends AppCompatActivity {
             update = findViewById(R.id.btnUpdate);
             name = findViewById(R.id.name_category);
             idCategory = findViewById(R.id.id_category);
-
+            add = findViewById(R.id.buttonNew);
 
             /** Create handle for the RetrofitInstance interface*/
-            GetCategoryDataService service = RetrofitInstance.getRetrofitInstance().create(GetCategoryDataService.class);
+            final GetCategoryDataService service = RetrofitInstance.getRetrofitInstance().create(GetCategoryDataService.class);
 
             /** Call the method with parameter in the interface to get the notice data*/
             Call<ArrayList<Category>> call = service.getCategoryData();
@@ -82,6 +77,55 @@ public class CategoryActivity extends AppCompatActivity {
 
             });
 
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    name_Category = name.getText().toString();
+                    id_Category = idCategory.getText().toString();
+                    Category category = new Category();
+                    category.setId((id_Category));
+                    category.setName(name_Category);
+                    list.add(category);
+                    Call <Category> callAddCat=service.addCategory(category);
+                    callAddCat.enqueue(new Callback<Category>() {
+                        @Override
+                        public void onResponse(Call<Category> call, Response<Category> response) {
+                            if (response.isSuccessful()) {
+       //                Toast.makeText(v, "Category created successfully!", Toast.LENGTH_SHORT).show();
+                                Log.i("INFO: ", "Category added");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Category> call, Throwable t) {
+                            Log.e("ERROR: ", t.getMessage());
+                        }
+                    });
+
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(com.example.roitm.retrofit2.CategoryActivity.this, "Category Added Success...", Toast.LENGTH_SHORT).show();
+                    name.setText(null);
+                    idCategory.setText(null);
+
+                }
+            });
+
+
+
+
+  /*          adapter.setOnItemClickListener(new ItemClickListener() {
+                @Override
+                public void OnItemClick(int position, Category category) {
+                    builder = new AlertDialog.Builder(com.example.roitm.retrofit2.CategoryActivity.this);
+                    builder.setTitle("Update User Info");
+                    builder.setCancelable(false);
+                    View view = LayoutInflater.from(com.example.roitm.retrofit2.CategoryActivity.this).inflate(R.layout.update_row_view, null, false);
+                    InitUpdateDialog(position, view, category);
+                    builder.setView(view);
+                    dialog = builder.create();
+                    dialog.show();
+                }
+            });*/
         }
 
         /**
@@ -98,97 +142,14 @@ public class CategoryActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
 
-
-            delete = findViewById(R.id.btnDelete);
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    name_Category = name.getText().toString();
-                 
-                   id_Category = idCategory.getText().toString();
-                    list.remove(id_Category);
-                    list.remove(name_Category);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(com.example.roitm.retrofit2.CategoryActivity.this, "User Delete Success...", Toast.LENGTH_SHORT).show();
-
-
-                }
-            });
-
-            add = findViewById(R.id.buttonNew);
-            add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    name_Category = name.getText().toString();
-                    id_Category = idCategory.getText().toString();
-                    Category category = new Category();
-                    category.setId((id_Category));
-                    category.setName(name_Category);
-                    list.add(category);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(com.example.roitm.retrofit2.CategoryActivity.this, "User Add Success...", Toast.LENGTH_SHORT).show();
-                    name.setText(" ");
-                    idCategory.setText(" ");
-
-                }
-            });
-
-            adapter.setOnItemClickListener(new ItemClickListener() {
-                @Override
-                public void OnItemClick(int position, Category category) {
-                    builder = new AlertDialog.Builder(com.example.roitm.retrofit2.CategoryActivity.this);
-                    builder.setTitle("Update User Info");
-                    builder.setCancelable(false);
-                    View view = LayoutInflater.from(com.example.roitm.retrofit2.CategoryActivity.this).inflate(R.layout.update_row_view, null, false);
-                    InitUpdateDialog(position, view);
-                    builder.setView(view);
-                    dialog = builder.create();
-                    dialog.show();
-                }
-            });
         }
 
-        private void InitUpdateDialog(final int position, View view) {
 
-            update_name_category = view.findViewById(R.id.update_name_category);
-            update_id_category = view.findViewById(R.id.update_id_category);
-            btnUpdate = view.findViewById(R.id.btn_update_user);
-            btnCancel = view.findViewById(R.id.btn_update_cancel);
-            update_name_category.setText(name_Category);
-            update_id_category.setText(id_Category);
 
-            btnUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    name_Category = update_name_category.getText().toString();
-                    id_Category = update_id_category.getText().toString();
-                    Category category = new Category();
-                    category.setName(name_Category);
-                    category.setId(id_Category);
-                    adapter.UpdateData(position, category);
-                    Toast.makeText(com.example.roitm.retrofit2.CategoryActivity.this, "User Updated..", Toast.LENGTH_SHORT).show();
-                }
-            });
-            btnCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
 
-        }
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // TODO Auto-generated method stub
 
-            menu.add("menu1");
-            menu.add("menu2");
-            menu.add("menu3");
-            menu.add("menu4");
 
-            return super.onCreateOptionsMenu(menu);
-        }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -196,5 +157,7 @@ public class CategoryActivity extends AppCompatActivity {
             Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
             return super.onOptionsItemSelected(item);
         }
-    }
+
+
+}
 
